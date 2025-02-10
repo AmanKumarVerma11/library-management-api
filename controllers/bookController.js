@@ -63,3 +63,23 @@ exports.deleteBook = async (req, res) => {
     }
 };
 
+exports.uploadBookCover = async (req, res) => {
+    try {
+        if (!req.file) return res.status(400).json({ message: "No file uploaded" });
+
+        const book = await Book.findById(req.params.id);
+        if (!book) return res.status(404).json({ message: "Book not found" });
+
+        const coverImage = {
+            data: req.file.buffer,
+            contentType: req.file.mimetype
+        };
+
+        book.coverImage = coverImage;
+        await book.save();
+
+        res.status(200).json({ message: "Book cover uploaded", coverImage: coverImage });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
