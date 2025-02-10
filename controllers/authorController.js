@@ -1,11 +1,8 @@
 const Author = require("../models/Author");
 
 exports.getAllAuthors = async (req, res) => {
-    const { page = 1, limit = 10 } = req.query;
     try {
-        const authors = await Author.find()
-            .limit(limit * 1)
-            .skip((page - 1) * limit);
+        const authors = await Author.find();
         res.status(200).json(authors);
     } catch (error) {
         res.status(500).json({ message: error.message });
