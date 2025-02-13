@@ -28,6 +28,9 @@ app.use('/', loanRoutes);
 const reviewRoutes = require('./routes/reviewRoutes');
 app.use('/', reviewRoutes);
 
+const swaggerSetup = require('./config/swagger');
+swaggerSetup(app);
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
